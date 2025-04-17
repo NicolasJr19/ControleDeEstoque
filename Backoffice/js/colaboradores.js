@@ -367,7 +367,16 @@ btn_gravarPopup.addEventListener("click",(evt)=>{
     .then(res=>{
         if(res.status==200){
             if(modojanela=="n"){
-                alert("Novo Colaborador Gravado!")
+                let config={
+                    titulo:"Alerta",
+                    texto:"Novo colaborador gravado!",
+                    cor:"#6FA0C8",
+                    tipo:"ok",
+                    ok:()=>{},
+                    sim:()=>{},
+                    nao:()=>{}
+            } 
+            Cxmsg.mostrar(config)
                 f_nome.value=""
                 f_tipoColab.value=""
                 f_status.value=""
@@ -376,24 +385,45 @@ btn_gravarPopup.addEventListener("click",(evt)=>{
                 telefones.innerHTML=""
                 carregarColaboradores()
             }else{
-                alert("Colaborador editado com sucesso!")
+                let config={
+                    titulo:"Alerta",
+                    texto:"Colaborador editado com sucesso!",
+                    cor:"#6FA0C8",
+                    tipo:"ok",
+                    ok:()=>{},
+                    sim:()=>{},
+                    nao:()=>{}
+            } 
+            Cxmsg.mostrar(config)
             }
         }else{
-            alert("Erro ao gravar novo colaborador")
+            let config={
+                titulo:"Alerta",
+                texto:"Erro ao gravar novo colaborador!",
+                cor:"#6FA0C8",
+                tipo:"ok",
+                ok:()=>{},
+                sim:()=>{},
+                nao:()=>{}
+        } 
+        Cxmsg.mostrar(config)
             console.error("Erro ao gravar novo colaborador")
         }
     })
 })
 
 btn_cancelarPopup.addEventListener("click",(evt)=>{
-    f_nome.value=""
-    f_nome.value=""
-    f_tipoColab.value=""
-    f_status.value=""
-    f_foto.value=""
-    img_foto.setAttribute("src","")
-    telefones.innerHTML=""
-    // novoColaborador.classList.add("ocultarPopup")
+    if(modojanela=="n"){
+        f_nome.value=""
+        f_nome.value=""
+        f_tipoColab.value=""
+        f_status.value=""
+        f_foto.value=""
+        img_foto.setAttribute("src","")
+        telefones.innerHTML=""
+    }else{
+        novoColaborador.classList.add("ocultarPopup")
+    }
 });
 
 const endpoint_tiposColab  = `${serv}/tiposcolab`
@@ -416,7 +446,16 @@ f_telefone.addEventListener("keyup",(evt)=>{
             criarCxTelefone(evt.target.value, "-1","n")
             evt.target.value=""
         }else{
-            alert("Digite um número de telefone válido!")
+            let config={
+                titulo:"Alerta",
+                texto:"Insira um número de telefone válido!",
+                cor:"#6FA0C8",
+                tipo:"ok",
+                ok:()=>{},
+                sim:()=>{},
+                nao:()=>{}
+        } 
+        Cxmsg.mostrar(config)
         }
     }
     
