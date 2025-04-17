@@ -1,0 +1,349 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+:root{
+    --azul-principal: rgb(111, 160, 200);
+    --fundo-janela: rgb(219, 238, 255);
+    --botoes: #3b82bd;
+
+}
+
+body{
+    overflow: hidden;
+}
+
+.menuPrincipal{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    /* background-color: rgb(111, 160, 200); */
+    width: 240px;
+    height: 100vh;
+    transition: all .3s;
+}
+
+.ocultar{
+    left: -210px !important;
+    transition: all .3s;
+}
+
+.menuItens{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--azul-principal);
+    height: 100%;
+}
+
+.btn_menuItem{
+    cursor: pointer;
+    margin: 5px;
+    padding: 5px 15px;
+    width: 200px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #000;
+    background-color: #3b82bd;
+    text-align: center;
+    text-transform: uppercase;
+    /* color: #fff; */
+
+}
+
+.btn_geral{
+    cursor: pointer;
+}
+
+.btn_menuPrincipal{
+    width: 30px;
+}
+
+.btn_menuPrincipal img{
+    width: inherit;
+}
+
+.principal{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: 100vh;
+}
+
+.fprincipal{
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/****/
+/*FORMATAÇÕES DE GRIDS*/
+.areaGrid{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    max-height: calc(100vh - 160px);
+    overflow-y: auto;
+}
+
+
+.grid{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.tituloGrid{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background-color: var(--azul-principal);
+    width: inherit;
+}
+
+.colunaTituloGrid{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dadosGrid{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.linhaGrid{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    /* width: inherit; */
+}
+
+.linhaGrid:nth-child(odd){
+    background-color: #fff;
+}
+.linhaGrid:nth-child(even){
+    background-color: var(--fundo-janela);
+}
+.linhaGrid:hover{
+    background-color: var(--botoes);
+    color: #fff;
+    padding: 1px;
+}
+
+.ocultarLinhaGrid{
+    display: none !important;
+}
+
+.icone_op{
+    cursor: pointer;
+}
+
+
+.colunaLinhaGrid{
+    display: flex;
+    justify-content: space-around;
+    
+    
+}
+/******/
+
+/*TOPO JANELA*/
+.topoJanela{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0px 10px 0;
+}
+
+.btn_mainOp{
+    cursor: pointer;
+    background-color: var(--azul-principal);
+    border-radius: 100px;
+    width: 30px;
+}
+/*************/
+
+/*JANELA NOVO*/
+.popup{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.75);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100vh;
+    transition: all 0.3s;
+}
+
+.janelaPopup{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+
+    width: 50%;
+}
+
+.tituloPopup{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--azul-principal);
+    padding: 5px;
+    border-radius: 10px 10px 0 0 ;
+    width: 100%;
+}
+.corpoPopup{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 5px;
+    background-color: var(--fundo-janela);
+    width: 100%;
+}
+.rodapePopup{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 5px;
+    background-color: var(--azul-principal);
+    border-radius: 0 0 10px 10px;
+    width: 100%;
+}
+
+.btn_janelaOp{
+    width: 20px;
+    cursor: pointer;
+}
+.btn_comandoPopup{
+    background-color: var(--botoes);
+    border:none;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+.campoForm{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: inherit;
+}
+
+.campoForm2{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: row;
+    box-sizing: border-box;
+    width: inherit;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+.campoForm input, .campoForm select{
+    padding: 5px;
+    border:none;
+    border-radius: 5px;
+    background-color: #fff;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 2px;
+}
+
+.campoForm div{
+    padding: 5px;
+    border:none;
+    border-radius: 5px;
+    background-color: #fff;
+    box-sizing: border-box;
+    margin-top: 2px;
+}
+
+.campoFiltragem{
+    width: 300px;
+
+}
+.inputFiltragem{
+    border: 3px solid var(--fundo-janela) !important;
+}
+.filtragem{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.campoRadio{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+}
+
+.radioCaixa{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+}
+
+.ocultarPopup{
+    display: none !important;
+    /* opacity: 0 !important;
+    z-index: -1; */
+    transition: all 0.3s;
+}
+
+.tel{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+}
+
+.numTel{
+    background-color: var(--fundo-janela) !important;
+    border-radius: 5px 0px 0px 5px !important;
+    width: 120px !important;
+    padding: 4px;
+    font-size: 0.94em;
+}
+
+.delTel{
+    background-color: rgb(229, 116, 116) !important;
+    width: 20px !important;
+    cursor: pointer;
+    border: 5px;
+    padding: 5px;
+    border-radius: 0px 5px 5px 0px !important;
+}
+
+.telefone{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
