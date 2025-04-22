@@ -144,7 +144,7 @@ const criarCxTelefone = (fone,idtel,tipo)=>{
 
 
 const carregarColaboradores = () =>{
-    const endpoint_todoscolaboradores = `${serv}/todosusuarios`;
+    const endpoint_todoscolaboradores = `${serv}/todaspessoas`;
     fetch(endpoint_todoscolaboradores)
     .then(res=>res.json())
     .then(res=>{
@@ -163,22 +163,22 @@ const criarLinha = (e) =>{
 
             const divc1 = document.createElement("div")
             divc1.setAttribute("class", "colunaLinhaGrid c1")
-            divc1.innerHTML=e.n_id_usuario
+            divc1.innerHTML=e.n_id_pessoa
             divlinha.appendChild(divc1)
 
             const divc2 = document.createElement("div")
             divc2.setAttribute("class", "colunaLinhaGrid c2")
-            divc2.innerHTML=e.s_nome_usuario
+            divc2.innerHTML=e.s_nome_pessoa
             divlinha.appendChild(divc2)
 
             const divc3 = document.createElement("div")
             divc3.setAttribute("class", "colunaLinhaGrid c3")
-            divc3.innerHTML=e.n_tipoUsuario_tipoUsuario
+            divc3.innerHTML=e.n_tipoPessoa_tipoPessoa
             divlinha.appendChild(divc3)
 
             const divc4 = document.createElement("div")
             divc4.setAttribute("class", "colunaLinhaGrid c4")
-            divc4.innerHTML=e.c_status_usuario
+            divc4.innerHTML=e.c_status_pessoa
             divlinha.appendChild(divc4)
 
             const divc5 = document.createElement("div")
@@ -186,12 +186,12 @@ const criarLinha = (e) =>{
             divlinha.appendChild(divc5)
 
             const img_status = document.createElement("img")
-            if(e.c_status_usuario == "A"){
+            if(e.c_status_pessoa == "A"){
                 img_status.setAttribute("src", "../img/on.svg")
             }else{
                 img_status.setAttribute("src", "../img/off.svg")
             }
-            img_status.setAttribute("data-idcolab",e.n_id_usuario)
+            img_status.setAttribute("data-idcolab",e.n_id_pessoa)
             img_status.setAttribute("class", "icone_op")
             img_status.addEventListener("click", (evt)=>{
                 const idcolab =evt.target.dataset.idcolab
@@ -231,10 +231,10 @@ const criarLinha = (e) =>{
                 .then(res=>res.json())
                 .then(res=>{
                     btn_gravarPopup.setAttribute("data-idcolab",id)
-                    f_nome.value=res[0].s_nome_usuario
-                    f_tipoColab.value=res[0].n_tipoUsuario_tipoUsuario
-                    f_status.value=res[0].c_status_usuario
-                    img_foto.src=res[0].s_foto_usuario
+                    f_nome.value=res[0].s_nome_pessoa
+                    f_tipoColab.value=res[0].n_tipoPessoa_tipoPessoa
+                    f_status.value=res[0].c_status_pessoa
+                    img_foto.src=res[0].s_foto_pessoa
                     
                     novoColaborador.classList.remove("ocultarPopup")
                 })
@@ -343,12 +343,12 @@ btn_gravarPopup.addEventListener("click",(evt)=>{
         numTels.push(t.innerHTML)
     })
     const dados ={
-        n_id_usuario: evt.target.dataset.idcolab,
-        s_nome_usuario:f_nome.value,
-        n_tipoUsuario_tipoUsuario:f_tipoColab.value,
-        c_status_usuario:f_status.value,
+        n_id_pessoa: evt.target.dataset.idcolab,
+        s_nome_pessoa:f_nome.value,
+        n_tipoPessoa_tipoPessoa:f_tipoColab.value,
+        c_status_pessoa:f_status.value,
         numtelefones:numTels,
-        s_foto_usuario:img_foto.getAttribute("src")
+        s_foto_pessoa:img_foto.getAttribute("src")
     }
     
     const cab = {
@@ -434,8 +434,8 @@ fetch(endpoint_tiposColab)
 
     res.forEach(e=>{
         const opt=document.createElement("option")
-        opt.setAttribute("value",e.n_tipoUsuario_tipoUsuario)
-        opt.innerHTML=e.s_desc_tipoUsuario
+        opt.setAttribute("value",e.n_tipoPessoa_tipoPessoa)
+        opt.innerHTML=e.s_desc_tipoPessoa
         f_tipoColab.appendChild(opt)
     })
 })
