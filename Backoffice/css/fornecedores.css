@@ -16,10 +16,44 @@ body{
     width: 200px;
 }
 
+.c1_fornecedores{
+    width: 70px;
+}
+.c2_fornecedores{
+    width: 400px;
+}
+.c3_fornecedores{
+    width: 100px;
+}
+
+.c1_fornecedoresAdd{
+    width: 50px;
+}
+.c2_fornecedoresAdd{
+    width: 380px;
+}
+.c3_fornecedoresAdd{
+    width: 130px;
+}
+
+
 .img_foto{
     width: 75px;
     height: 100px;
     border-radius: 5px;
     border: 1px solid black;
     
+}
+
+#grid_listaContatosFornecedorAdd{
+    width: 560px;
+}
+
+#tituloGrid{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background-color: var(--azul-principal);
+    width: inherit;
 }

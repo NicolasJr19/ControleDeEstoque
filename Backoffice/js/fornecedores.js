@@ -25,6 +25,9 @@ const cxbase = document.querySelector("#cxbase")
 const btnListarContatos = document.querySelector("#btnListarContatos")
 const listaContatosFornecedor = document.querySelector("#listaContatosFornecedor")
 const btn_fecharPopupContatos = document.querySelector("#btn_fecharPopupContatos")
+const dadosGrid_fornecedores = document.querySelector("#dadosGrid_fornecedores")
+const btn_criarNovoContatoFornecedor = document.querySelector("#btn_criarNovoContatoFornecedor")
+const dadosGrid_listaContatosFornecedorAdd = document.querySelector("#dadosGrid_listaContatosFornecedorAdd")
 
 //n=novo Fornecedor | e=editar Fornecedor
 let modojanela = "n"
@@ -54,16 +57,6 @@ btn_pesq.addEventListener("click",(evt)=>{
 
 btn_fecharPopupPesq.addEventListener("click",(evt)=>{
     pesquisa.classList.add("ocultarPopup")
-})
-
-btnListarContatos.addEventListener("click",(evt)=>{
-    listaContatosFornecedor.classList.remove("ocultarPopup")
-    let mzi = maiorZIndex()+1
-    listaContatosFornecedor.setAttribute("style",`z-index:${mzi} !important`)
-})
-
-btn_fecharPopupContatos.addEventListener("click",(evt)=>{
-    listaContatosFornecedor.classList.add("ocultarPopup")
 })
 
 f_pesqId.addEventListener("click",(evt)=>{
@@ -380,6 +373,110 @@ f_foto.addEventListener("change",(evt)=>{
     converte_imagem_b64(img_foto,evt.target.files[0])
     img_foto.classList.remove("esconderElemento")
 })
+
+const addLinhaContatoFornecedor = (id,nome) =>{
+    const divlinha = document.createElement("div")
+    divlinha.setAttribute("class","linhaGrid")
+
+    const divc1 = document.createElement("div")
+    divc1.setAttribute("class", "colunaLinhaGrid c1_fornecedoresAdd")
+    divc1.innerHTML=id
+    divlinha.appendChild(divc1)
+
+    const divc2 = document.createElement("div")
+    divc2.setAttribute("class", "colunaLinhaGrid c2_fornecedoresAdd")
+    divc2.innerHTML=nome
+    divlinha.appendChild(divc2)
+
+    const divc3 = document.createElement("div")
+    divc3.setAttribute("class", "colunaLinhaGrid c3_fornecedoresAdd")
+    divlinha.appendChild(divc3)
+
+    const img_removerContato = document.createElement("img")
+    img_removerContato.setAttribute("src", "../../img/delete.svg")
+    img_removerContato.setAttribute("class", "icone_op")
+    img_removerContato.addEventListener("click", (evt)=>{
+        evt.target.parentNode.parentNode.remove()
+    })
+    divc3.appendChild(img_removerContato)
+
+    dadosGrid_listaContatosFornecedorAdd.appendChild(divlinha)
+}
+
+const mostrarTelefonesFornecedor = () =>{
+
+}
+
+const criarLinhaContatoFornecedor = (e)=>{
+    const divlinha = document.createElement("div")
+    divlinha.setAttribute("class","linhaGrid")
+
+    const divc1 = document.createElement("div")
+    divc1.setAttribute("class", "colunaLinhaGrid c1_fornecedores")
+    divc1.innerHTML=e.n_id_pessoa
+    divlinha.appendChild(divc1)
+
+    const divc2 = document.createElement("div")
+    divc2.setAttribute("class", "colunaLinhaGrid c2_fornecedores")
+    divc2.innerHTML=e.s_nome_pessoa
+    divlinha.appendChild(divc2)
+
+    const divc3 = document.createElement("div")
+    divc3.setAttribute("class", "colunaLinhaGrid c3_fornecedores")
+    divlinha.appendChild(divc3)
+
+    const img_addContato = document.createElement("img")
+    img_addContato.setAttribute("src", "../../img/addContato.svg")
+    img_addContato.setAttribute("class", "icone_op")
+    img_addContato.addEventListener("click", (evt)=>{
+        const linha = evt.target.parentNode.parentNode
+        const id = linha.childNodes[0].innerHTML
+        const nome = linha.childNodes[1].innerHTML
+        addLinhaContatoFornecedor(id, nome)
+    })
+    divc3.appendChild(img_addContato)
+
+
+    const img_verFone = document.createElement("img")
+    img_verFone.setAttribute("src", "../../img/telefone.svg")
+    img_verFone.setAttribute("class", "icone_op")
+    img_verFone.addEventListener("click",(evt)=>{
+        const id = evt.target.parentNode.parentNode.firstChild.innerHTML
+        console.log(id)
+        let endpoint = `${serv}/retornatelefone/${id}`
+        fetch(endpoint)
+        .then(res=>res.json())
+        .then(res=>{
+            res.forEach(e=>{
+                
+            })
+        })
+    })
+    divc3.appendChild(img_verFone)
+
+    dadosGrid_fornecedores.appendChild(divlinha)
+}
+
+btnListarContatos.addEventListener("click",(evt)=>{
+    listaContatosFornecedor.classList.remove("ocultarPopup")
+    let mzi = maiorZIndex()+1
+    listaContatosFornecedor.setAttribute("style",`z-index:${mzi} !important`)
+    dadosGrid_fornecedores.innerHTML=""
+    const endpoint = `${serv}/todaspessoasfornecedor`
+    fetch(endpoint)
+    .then(res=>res.json())
+    .then(res=>{
+        res.forEach(e => {
+            criarLinhaContatoFornecedor(e)
+        })
+    })
+})
+
+btn_fecharPopupContatos.addEventListener("click",(evt)=>{
+    listaContatosFornecedor.classList.add("ocultarPopup")
+})
+
+
 
 // document.addEventListener("DOMContentLoaded", function () {
 //     const telefoneInput = document.querySelector("#f_telefone");
