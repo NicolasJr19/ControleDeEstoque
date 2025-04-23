@@ -1,4 +1,5 @@
 import { Cxmsg } from "../../utils/cxmsg.js"
+import { maiorZIndex } from "../../utils/utils.js"
 
 const dadosGrid = document.querySelector("#dadosGrid")
 const novoFornecedor = document.querySelector("#novoFornecedor")
@@ -8,7 +9,7 @@ const btn_fecharPopup = document.querySelector("#btn_fecharPopup")
 const btn_fecharPopupPesq = document.querySelector("#btn_fecharPopupPesq")
 const btn_cancelarPopup = document.querySelector("#btn_cancelarPopup")
 const btn_gravarPopup = document.querySelector("#btn_gravarPopup")
-const telefones = document.querySelector("#telefones")
+// const telefones = document.querySelector("#telefones")
 const f_nome = document.querySelector("#f_nome")
 const f_status = document.querySelector("#f_status")
 const f_foto = document.querySelector("#f_foto")
@@ -21,6 +22,9 @@ const f_pesqId = document.querySelector("#f_pesqId")
 const f_pesqNome = document.querySelector("#f_pesqNome")
 const btn_listarTudo = document.querySelector("#btn_listarTudo")
 const cxbase = document.querySelector("#cxbase")
+const btnListarContatos = document.querySelector("#btnListarContatos")
+const listaContatosFornecedor = document.querySelector("#listaContatosFornecedor")
+const btn_fecharPopupContatos = document.querySelector("#btn_fecharPopupContatos")
 
 //n=novo Fornecedor | e=editar Fornecedor
 let modojanela = "n"
@@ -50,6 +54,16 @@ btn_pesq.addEventListener("click",(evt)=>{
 
 btn_fecharPopupPesq.addEventListener("click",(evt)=>{
     pesquisa.classList.add("ocultarPopup")
+})
+
+btnListarContatos.addEventListener("click",(evt)=>{
+    listaContatosFornecedor.classList.remove("ocultarPopup")
+    let mzi = maiorZIndex()+1
+    listaContatosFornecedor.setAttribute("style",`z-index:${mzi} !important`)
+})
+
+btn_fecharPopupContatos.addEventListener("click",(evt)=>{
+    listaContatosFornecedor.classList.add("ocultarPopup")
 })
 
 f_pesqId.addEventListener("click",(evt)=>{
@@ -188,7 +202,7 @@ const criarLinha = (e) =>{
                     f_status.value=res[0].c_status_fornecedor
                     img_foto.src=res[0].s_logo_fornecedor
                     novoFornecedor.classList.remove("ocultarPopup")
-                    if(img_foto.src==""){
+                    if(res[0].s_logo_fornecedor==""){
                         img_foto.classList.add("esconderElemento")
                     }else{
                         img_foto.classList.remove("esconderElemento")
@@ -253,7 +267,6 @@ btn_add.addEventListener("click",(evt)=>{
     f_foto.value=""
     img_foto.setAttribute("src","")
     img_foto.classList.add("esconderElemento")
-    telefones.innerHTML=""
 });
 
 btn_fecharPopup.addEventListener("click",(evt)=>{
@@ -267,16 +280,10 @@ btn_fecharPopup.addEventListener("click",(evt)=>{
 });
 
 btn_gravarPopup.addEventListener("click",(evt)=>{
-    const tels=[...document.querySelectorAll(".novoTel")]
-    let numTels=[]
-    tels.forEach(t=>{
-        numTels.push(t.innerHTML)
-    })
     const dados ={
         n_id_fornecedor: evt.target.dataset.idfornecedor,
         s_desc_fornecedor:f_nome.value,
         c_status_fornecedor:f_status.value,
-        numtelefones:numTels,
         s_logo_fornecedor:img_foto.getAttribute("src")
     }
     
@@ -310,9 +317,10 @@ btn_gravarPopup.addEventListener("click",(evt)=>{
                 f_status.value=""
                 f_foto.value=""
                 img_foto.setAttribute("src","")
-                telefones.innerHTML=""
+                novoFornecedor.classList.add("ocultarPopup")
                 carregarFornecedores()
                 img_foto.classList.add("esconderElemento")
+
             }else{
                 let config={
                     titulo:"Alerta",
@@ -349,7 +357,6 @@ btn_cancelarPopup.addEventListener("click",(evt)=>{
         f_status.value=""
         f_foto.value=""
         img_foto.setAttribute("src","")
-        telefones.innerHTML=""
     }else{
         novoFornecedor.classList.add("ocultarPopup")
     }
@@ -374,32 +381,30 @@ f_foto.addEventListener("change",(evt)=>{
     img_foto.classList.remove("esconderElemento")
 })
 
+// document.addEventListener("DOMContentLoaded", function () {
+//     const telefoneInput = document.querySelector("#f_telefone");
 
+//      // Impede que caracteres não numéricos sejam digitados
+//      telefoneInput.addEventListener("keypress", function (event) {
+//         if (!/[0-9]/.test(event.key) && !(event.key=="Enter")) {
+//             event.preventDefault();
+//         }
+//     });
 
-document.addEventListener("DOMContentLoaded", function () {
-    const telefoneInput = document.querySelector("#f_telefone");
+//     telefoneInput.addEventListener("input", function () {
+//         let valor = telefoneInput.value.replace(/\D/g, ""); // Remove caracteres não numéricos
+//         if (valor.length > 11) valor = valor.slice(0, 11); // Limita a 11 caracteres
 
-     // Impede que caracteres não numéricos sejam digitados
-     telefoneInput.addEventListener("keypress", function (event) {
-        if (!/[0-9]/.test(event.key) && !(event.key=="Enter")) {
-            event.preventDefault();
-        }
-    });
-
-    telefoneInput.addEventListener("input", function () {
-        let valor = telefoneInput.value.replace(/\D/g, ""); // Remove caracteres não numéricos
-        if (valor.length > 11) valor = valor.slice(0, 11); // Limita a 11 caracteres
-
-        // Aplica a máscara
-        if (valor.length > 10) {
-            telefoneInput.value = `(${valor.slice(0, 2)}) ${valor.slice(2, 7)}-${valor.slice(7, 11)}`;
-        } else if (valor.length > 6) {
-            telefoneInput.value = `(${valor.slice(0, 2)}) ${valor.slice(2, 6)}-${valor.slice(6, 10)}`;
-        } else if (valor.length > 2) {
-            telefoneInput.value = `(${valor.slice(0, 2)}) ${valor.slice(2, 6)}`;
-        } else if (valor.length > 0) {
-            telefoneInput.value = `(${valor}`;
-        }
-    });
-});
+//         // Aplica a máscara
+//         if (valor.length > 10) {
+//             telefoneInput.value = `(${valor.slice(0, 2)}) ${valor.slice(2, 7)}-${valor.slice(7, 11)}`;
+//         } else if (valor.length > 6) {
+//             telefoneInput.value = `(${valor.slice(0, 2)}) ${valor.slice(2, 6)}-${valor.slice(6, 10)}`;
+//         } else if (valor.length > 2) {
+//             telefoneInput.value = `(${valor.slice(0, 2)}) ${valor.slice(2, 6)}`;
+//         } else if (valor.length > 0) {
+//             telefoneInput.value = `(${valor}`;
+//         }
+//     });
+// });
 

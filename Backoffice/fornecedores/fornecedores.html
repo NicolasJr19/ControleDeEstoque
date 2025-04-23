@@ -10,6 +10,23 @@
 </head>
 <body>
     <!-- <h1>colaboradores</h1> -->
+    <div id="listaContatosFornecedor" class="popup ocultarPopup">
+        <div class="janelaPopup">
+            <div class="tituloPopup">
+                <div id="tituloJanelaPesq">Lista de Contatos</div>
+                <img src="../../img/fechar.svg" class="btn_janelaOp" id="btn_fecharPopupContatos">
+            </div>
+            <div id="" class="corpoPopup">
+                <div id="grid_contatosFornecedor">
+                    Grid Contatos Fornecedores
+                </div>
+            </div>
+            <div class="rodapePopup">
+                <button id="btn_pesquisar" class="btn_comandoPopup">Pesquisar</button>
+            </div>
+        </div>
+    </div>
+
     <div id="topoJanela" class="topoJanela">
         <div></div>
         <div>Fornecedores</div>
@@ -84,8 +101,9 @@
                 <div class="campoForm2">
                    <img id="img_foto" class="img_foto esconderElemento" src="#">
                 </div>
-
-                
+                <div class="campoForm">
+                    <button id="btnListarContatos" class="btn_comandoPopup">Listar Contatos do Fornecedor</button>
+                </div>
             </div>
             <div class="rodapePopup">
                 <button id="btn_gravarPopup" class="btn_comandoPopup">Gravar</button>

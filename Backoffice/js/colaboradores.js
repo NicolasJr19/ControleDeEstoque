@@ -224,7 +224,7 @@ const criarLinha = (e) =>{
             img_editar.setAttribute("class", "icone_op")
             img_editar.addEventListener("click",(evt)=>{
                 modojanela = "e"
-                document.getElementById("tituloJanela").innerHTML = "Editar Colaborador";
+                document.getElementById("tituloJanela").innerHTML = "Editar Pessoa";
                 const id = evt.target.parentNode.parentNode.firstChild.innerHTML
                 let endpoint = `${serv}/dadoscolab/${id}`
                 fetch(endpoint)
@@ -236,7 +236,7 @@ const criarLinha = (e) =>{
                     f_status.value=res[0].c_status_pessoa
                     img_foto.src=res[0].s_foto_pessoa
                     novoColaborador.classList.remove("ocultarPopup")
-                    if(img_foto.src==""){
+                    if(res[0].s_foto_pessoa==""){
                         img_foto.classList.add("esconderElemento")
                     }else{
                         img_foto.classList.remove("esconderElemento")
@@ -261,7 +261,7 @@ const criarLinha = (e) =>{
                 const id = evt.target.parentNode.parentNode.firstChild.innerHTML
                 let config={
                     titulo:"Alerta",
-                    texto:"Deseja realmente excluir o colaborador?",
+                    texto:"Deseja realmente excluir essa pessoa?",
                     cor:"#6FA0C8",
                     tipo:"sn",
                     ok:()=>{
@@ -277,7 +277,7 @@ const criarLinha = (e) =>{
                             carregarColaboradores()
                             config={
                                 titulo:"Alerta",
-                                texto:"Colaborador excluído com sucesso!",
+                                texto:"Pessoa excluída com sucesso!",
                                 cor:"#6FA0C8",
                                 tipo:"ok",
                                 ok:()=>{
@@ -317,7 +317,7 @@ const criarLinha = (e) =>{
 
 btn_add.addEventListener("click",(evt)=>{
     modojanela = "n"
-    document.getElementById("tituloJanela").innerHTML = "Novo Colaborador";
+    document.getElementById("tituloJanela").innerHTML = "Nova Pessoa";
 
     novoColaborador.classList.remove("ocultarPopup")
 
@@ -374,7 +374,7 @@ btn_gravarPopup.addEventListener("click",(evt)=>{
             if(modojanela=="n"){
                 let config={
                     titulo:"Alerta",
-                    texto:"Novo colaborador gravado!",
+                    texto:"Nova pessoa gravada com sucesso!",
                     cor:"#6FA0C8",
                     tipo:"ok",
                     ok:()=>{},
@@ -390,10 +390,11 @@ btn_gravarPopup.addEventListener("click",(evt)=>{
                 telefones.innerHTML=""
                 carregarColaboradores()
                 img_foto.classList.add("esconderElemento")
+                novoColaborador.classList.add("ocultarPopup")
             }else{
                 let config={
                     titulo:"Alerta",
-                    texto:"Colaborador editado com sucesso!",
+                    texto:"Pessoa editado com sucesso!",
                     cor:"#6FA0C8",
                     tipo:"ok",
                     ok:()=>{},
@@ -405,7 +406,7 @@ btn_gravarPopup.addEventListener("click",(evt)=>{
         }else{
             let config={
                 titulo:"Alerta",
-                texto:"Erro ao gravar novo colaborador!",
+                texto:"Erro ao gravar nova pessoa!",
                 cor:"#6FA0C8",
                 tipo:"ok",
                 ok:()=>{},
@@ -413,7 +414,7 @@ btn_gravarPopup.addEventListener("click",(evt)=>{
                 nao:()=>{}
         } 
         Cxmsg.mostrar(config)
-            console.error("Erro ao gravar novo colaborador")
+            console.error("Erro ao gravar novo pessoa")
         }
     })
 })
