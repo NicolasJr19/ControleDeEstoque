@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estoque - BackOffice</title>
-    <link rel="stylesheet" type="text/css" href="css/colaboradores.css">
-    <link rel="stylesheet" type="text/css" href="../estoque_geral.css">
-    <link rel="stylesheet" type="text/css" href="css/caixa_mensagem.css">
+    <title>Fornecedores - BackOffice</title>
+    <link rel="stylesheet" type="text/css" href="../css/fornecedores.css">
+    <link rel="stylesheet" type="text/css" href="../../estoque_geral.css">
+    <link rel="stylesheet" type="text/css" href="../css/caixa_mensagem.css">
 </head>
 <body>
     <!-- <h1>colaboradores</h1> -->
     <div id="topoJanela" class="topoJanela">
         <div></div>
-        <div>Colaboradores</div>
+        <div>Fornecedores</div>
         <div>
-            <img src="../img/add.svg" id="btn_add" class="btn_mainOp" title="Adicionar novo operador">
-            <img src="../img/search.svg" id="btn_pesq" class="btn_mainOp" title="Pesquisar operador">
-            <img src="../img/list.svg" id="btn_listarTudo" class="btn_mainOp" title="Listar todos os operadores">
+            <img src="../../img/add.svg" id="btn_add" class="btn_mainOp" title="Adicionar novo operador">
+            <img src="../../img/search.svg" id="btn_pesq" class="btn_mainOp" title="Pesquisar operador">
+            <img src="../../img/list.svg" id="btn_listarTudo" class="btn_mainOp" title="Listar todos os operadores">
 
         </div>
     </div>
@@ -33,7 +33,7 @@
         <div class="janelaPopup">
             <div class="tituloPopup">
                 <div id="tituloJanelaPesq">Pesquisar</div>
-                <img src="../img/fechar.svg" class="btn_janelaOp" id="btn_fecharPopupPesq">
+                <img src="../../img/fechar.svg" class="btn_janelaOp" id="btn_fecharPopupPesq">
             </div>
             <div class="corpoPopup">
                 <div class="campoForm">
@@ -57,22 +57,16 @@
         </div>
     </div>
 
-    <div id="novoColaborador" class="popup ocultarPopup">
+    <div id="novoFornecedor" class="popup ocultarPopup">
         <div class="janelaPopup">
             <div class="tituloPopup">
-                <div id="tituloJanela">Novo Colaborador</div>
-                <img src="../img/fechar.svg" class="btn_janelaOp" id="btn_fecharPopup">
+                <div id="tituloJanela">Novo Fornecedor</div>
+                <img src="../../img/fechar.svg" class="btn_janelaOp" id="btn_fecharPopup">
             </div>
             <div class="corpoPopup">
                 <div class="campoForm">
-                    <label>Nome do Colaborador</label>
+                    <label>Nome do Fornecedor</label>
                     <input type="text" id="f_nome" name="f_nome">
-                </div>
-                <div class="campoForm">
-                    <label>Tipo Colaborador</label>
-                    <select id="f_tipoColab" name="f_tipo">
-                        <option></option>
-                    </select>
                 </div>
                 <div class="campoForm">
                     <label>Status</label>
@@ -88,19 +82,10 @@
                     id="f_foto" name="f_foto">
                 </div>
                 <div class="campoForm2">
-                   <img id="img_foto" class="img_foto" src="#">
+                   <img id="img_foto" class="img_foto esconderElemento" src="#">
                 </div>
 
-                <div class="campoForm">
-                    <label>Telefones</label>
-                    <input type="text" id="f_telefone" name="f_telefone">
-                    <div id="telefones" class="telefone">
-                        <!-- <div class="tel">
-                            <div class="numTel">(31) 99590-2006</div>
-                            <img src="../img/delete.svg" class="delTel">
-                        </div> -->
-                    </div>
-                </div>
+                
             </div>
             <div class="rodapePopup">
                 <button id="btn_gravarPopup" class="btn_comandoPopup">Gravar</button>
@@ -114,9 +99,8 @@
             <div id="tituloGrid" class="tituloGrid">
                 <div class="colunaTituloGrid c1">ID</div>
                 <div class="colunaTituloGrid c2">Nome</div>
-                <div class="colunaTituloGrid c3">Tipo</div>
-                <div class="colunaTituloGrid c4">Status</div>
-                <div class="colunaTituloGrid c5">Operações</div>
+                <div class="colunaTituloGrid c3">Status</div>
+                <div class="colunaTituloGrid c4">Operações</div>
             </div>
             <div id="dadosGrid" class="dadosGrid">
                 <!-- <div class="linhaGrid">
@@ -130,7 +114,7 @@
         </div>
     </div>
 
-    <script src="../estoque_geral.js" type="module"></script>
-    <script src="js/colaboradores.js" type="module"></script>
+    <script src="../../estoque_geral.js" type="module"></script>
+    <script src="../js/fornecedores.js" type="module"></script>
 </body>
 </html>

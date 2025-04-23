@@ -32,14 +32,14 @@ export class Cxmsg{
         p_titulo.innerHTML=config.titulo
         titulo_cxmsg.appendChild(p_titulo)
 
-        const img_btnFechar = document.createElement("img")
-        img_btnFechar.setAttribute("class","btn_fecharCxmsg")
-        img_btnFechar.setAttribute("id","btn_fecharCxmsg")
-        img_btnFechar.setAttribute("src","../img/fechar.svg")
-        img_btnFechar.addEventListener("click",(evt)=>{
-            this.fechar()
-        })
-        titulo_cxmsg.appendChild(img_btnFechar)
+        // const img_btnFechar = document.createElement("img")
+        // img_btnFechar.setAttribute("class","btn_fecharCxmsg")
+        // img_btnFechar.setAttribute("id","btn_fecharCxmsg")
+        // img_btnFechar.setAttribute("src","../img/fechar.svg")
+        // img_btnFechar.addEventListener("click",(evt)=>{
+        //     this.fechar()
+        // })
+        // titulo_cxmsg.appendChild(img_btnFechar)
 
         //Corpo
         const corpo_cxmsg = document.createElement("div")

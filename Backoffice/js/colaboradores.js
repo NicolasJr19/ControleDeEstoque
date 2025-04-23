@@ -118,7 +118,7 @@ const criarCxTelefone = (fone,idtel,tipo)=>{
             divTel.appendChild(numTel)
             
             const delTel=document.createElement("img")
-            delTel.setAttribute("src","../img/delete.svg")
+            delTel.setAttribute("src","../../img/delete.svg")
             delTel.setAttribute("class","delTel")
             delTel.setAttribute("data-idtel", idtel)
             delTel.addEventListener("click",(evt)=>{
@@ -187,20 +187,20 @@ const criarLinha = (e) =>{
 
             const img_status = document.createElement("img")
             if(e.c_status_pessoa == "A"){
-                img_status.setAttribute("src", "../img/on.svg")
+                img_status.setAttribute("src", "../../img/on.svg")
             }else{
-                img_status.setAttribute("src", "../img/off.svg")
+                img_status.setAttribute("src", "../../img/off.svg")
             }
             img_status.setAttribute("data-idcolab",e.n_id_pessoa)
             img_status.setAttribute("class", "icone_op")
             img_status.addEventListener("click", (evt)=>{
                 const idcolab =evt.target.dataset.idcolab
-                if(evt.target.getAttribute("src")=="../img/on.svg"){
+                if(evt.target.getAttribute("src")=="../../img/on.svg"){
                     const endpoint_mudarStatus = `${serv}/mudarStatusColab/${idcolab}/I`
                     fetch(endpoint_mudarStatus)
                     .then(res=>{
                         if(res.status==200){
-                            evt.target.setAttribute("src","../img/off.svg")
+                            evt.target.setAttribute("src","../../img/off.svg")
                             evt.target.parentNode.parentNode.childNodes[3].innerHTML="I"
                             
                         }
@@ -210,7 +210,7 @@ const criarLinha = (e) =>{
                     fetch(endpoint_mudarStatus)
                     .then(res=>{
                         if(res.status==200){
-                            evt.target.setAttribute("src","../img/on.svg")
+                            evt.target.setAttribute("src","../../img/on.svg")
                             evt.target.parentNode.parentNode.childNodes[3].innerHTML="A"
                         }
                     })
@@ -220,7 +220,7 @@ const criarLinha = (e) =>{
 
 
             const img_editar = document.createElement("img")
-            img_editar.setAttribute("src", "../img/edit.svg")
+            img_editar.setAttribute("src", "../../img/edit.svg")
             img_editar.setAttribute("class", "icone_op")
             img_editar.addEventListener("click",(evt)=>{
                 modojanela = "e"
@@ -235,8 +235,12 @@ const criarLinha = (e) =>{
                     f_tipoColab.value=res[0].n_tipoPessoa_tipoPessoa
                     f_status.value=res[0].c_status_pessoa
                     img_foto.src=res[0].s_foto_pessoa
-                    
                     novoColaborador.classList.remove("ocultarPopup")
+                    if(img_foto.src==""){
+                        img_foto.classList.add("esconderElemento")
+                    }else{
+                        img_foto.classList.remove("esconderElemento")
+                    }
                 })
 
                 endpoint = `${serv}/telefonescolab/${id}`
@@ -251,7 +255,7 @@ const criarLinha = (e) =>{
             divc5.appendChild(img_editar)
 
             const img_delete = document.createElement("img")
-            img_delete.setAttribute("src", "../img/delete.svg")
+            img_delete.setAttribute("src", "../../img/delete.svg")
             img_delete.setAttribute("class", "icone_op")
             img_delete.addEventListener("click",(evt)=>{
                 const id = evt.target.parentNode.parentNode.firstChild.innerHTML
@@ -322,6 +326,7 @@ btn_add.addEventListener("click",(evt)=>{
     f_status.value=""
     f_foto.value=""
     img_foto.setAttribute("src","")
+    img_foto.classList.add("esconderElemento")
     telefones.innerHTML=""
 });
 
@@ -384,6 +389,7 @@ btn_gravarPopup.addEventListener("click",(evt)=>{
                 img_foto.setAttribute("src","")
                 telefones.innerHTML=""
                 carregarColaboradores()
+                img_foto.classList.add("esconderElemento")
             }else{
                 let config={
                     titulo:"Alerta",
@@ -475,6 +481,7 @@ const converte_imagem_b64 = (localDestino,arquivoimg) => {
 
 f_foto.addEventListener("change",(evt)=>{
     converte_imagem_b64(img_foto,evt.target.files[0])
+    img_foto.classList.remove("esconderElemento")
 })
 
 
