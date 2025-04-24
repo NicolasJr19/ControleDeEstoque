@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque - BackOffice</title>
+    <link rel="stylesheet" type="text/css" href="../css/produto.css">
+    <link rel="stylesheet" type="text/css" href="../../estoque_geral.css">
+    <link rel="stylesheet" type="text/css" href="../css/caixa_mensagem.css">
+</head>
+<body>
+    <!-- <h1>Produtos</h1> -->
+    <div id="topoJanela" class="topoJanela">
+        <div></div>
+        <div>Produtos</div>
+        <div>
+            <img src="../../img/add.svg" id="btn_add" class="btn_mainOp" title="Adicionar novo produto">
+            <img src="../../img/movimentacao.svg" id="btn_movimentacao" class="btn_mainOp" title="Realizar movimentações">
+            <img src="../../img/search.svg" id="btn_pesq" class="btn_mainOp" title="Pesquisar produto">
+            <img src="../../img/list.svg" id="btn_listarTudo" class="btn_mainOp" title="Listar todos os produtos">
+
+        </div>
+    </div>
+
+    <div id="filtragem" class="filtragem">
+        <div class="campoForm campoFiltragem">
+            <label>Filtrar por Produto:</label>
+            <input type="text" id="f_filtragem" name="f_filtragem" class="inputFiltragem">
+        </div>
+    </div>
+
+    <!--  -->
+    <div id="pesquisa" class="popup ocultarPopup">
+        <div class="janelaPopup">
+            <div class="tituloPopup">
+                <div id="tituloJanelaPesq">Pesquisar</div>
+                <img src="../../img/fechar.svg" class="btn_janelaOp" id="btn_fecharPopupPesq">
+            </div>
+            <div class="corpoPopup">
+                <div class="campoForm">
+                    <label>Tipo da Pesquisa</label>
+                    <div class="radioCaixa">
+                        <div class="campoRadio">
+                            <input type="radio" id="f_pesqId" name="f_pesqTipo" checked>ID
+                        </div>
+                        <div class="campoRadio">
+                            <input type="radio" id="f_pesqNome" name="f_pesqTipo">Nome
+                        </div>
+                    </div>
+                </div>
+                <div class="campoForm">
+                    <input type="text" id="f_pesq" name="f_pesq">
+                </div>
+            </div>
+            <div class="rodapePopup">
+                <button id="btn_pesquisar" class="btn_comandoPopup">Pesquisar</button>
+            </div>
+        </div>
+    </div>
+<!--ocultarPopup-->
+    <div id="novoProdutos" class="popup">
+        <div class="janelaPopup">
+            <div class="tituloPopup">
+                <div id="tituloJanela">Novo Produtos</div>
+                <img src="../../img/fechar.svg" class="btn_janelaOp" id="btn_fecharPopup">
+            </div>
+            <div class="corpoPopup">
+                <div class="campoForm">
+                    <label>Código do Produtos</label>
+                    <input type="text" id="f_codigo" name="f_codigo">
+                </div>
+                <div class="campoForm">
+                    <label>Tipo Produtos</label>
+                    <select id="f_tipoProduto" name="f_tipo">
+                        <option></option>
+                    </select>
+                </div>
+                <div class="campoForm">
+                    <label>Descrição do Produtos</label>
+                    <input type="text" id="f_nome" name="f_nome">
+                </div>
+                <div class="campoForm">
+                    <label>Quantidade:</label>
+                    <input type="number" id="f_quantidade" name="f_quantidade">
+                    </input>
+                </div>
+                <div class="campoForm">
+                    <label>Fornecedor</label>
+                    <select id="f_fornecedor" name="f_fornecedor">
+                        <option></option>
+                    </select>
+                </div>
+                <div class="campoForm">
+                    <label>Status</label>
+                    <select id="f_status" name="f_status">
+                        <option value="A">Ativo</option>
+                        <option value="I">Inativo</option> 
+                    </select>
+                </div>
+                <div class="campoForm">
+                    <label>Foto do Produto</label>
+                    <input type="file" accept="image/png, image/jpeg, image/jpg" 
+                    id="f_foto" name="f_foto">
+                </div>
+                <div class="campoForm2">
+                   <img id="img_foto" class="img_foto" src="">
+                </div>
+            </div>
+            <div class="rodapePopup">
+                <button id="btn_gravarProduto" class="btn_comandoPopup">Registrar Produto</button>
+                <button id="btn_cancelarPopup" class="btn_comandoPopup">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="movEstoque" class="popup ocultarPopup">
+        <div class="janelaPopup">
+            <div class="tituloPopup">
+                <div id="tituloJanela">Movimentação de Estoque</div>
+                <img src="../../img/fechar.svg" class="btn_janelaOp" id="btn_fecharPopup">
+            </div>
+            <div class="corpoPopup">
+                <div class="campoForm">
+                    <label>Nome da Produtos</label>
+                    <input type="text" id="f_nome" name="f_nome">
+                </div>
+                <div class="campoForm">
+                    <label>Tipo Produtos</label>
+                    <select id="f_tipoProduto" name="f_tipo">
+                        <option></option>
+                    </select>
+                </div>
+                <div class="campoForm">
+                    <label>Status</label>
+                    <select id="f_status" name="f_status">
+                        <option value="A">Ativo</option>
+                        <option value="I">Inativo</option> 
+                    </select>
+                </div>
+            </div>
+            <div class="rodapePopup">
+                <button id="btn_gravarMov" class="btn_comandoPopup">Registrar Movimentação</button>
+                <button id="btn_cancelarPopup" class="btn_comandoPopup">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="areaGrid" class="areaGrid">
+        <div id="grid" class="grid">
+            <div id="tituloGrid" class="tituloGrid">
+                <div class="colunaTituloGrid c1">ID</div>
+                <div class="colunaTituloGrid c2">Nome</div>
+                <div class="colunaTituloGrid c3">Tipo</div>
+                <div class="colunaTituloGrid c4">Status</div>
+                <div class="colunaTituloGrid c5">Operações</div>
+            </div>
+            <div id="dadosGrid" class="dadosGrid">
+                <!-- <div class="linhaGrid">
+                    <div class="colunaLinhaGrid c1">ID</div>
+                    <div class="colunaLinhaGrid c2">Nome</div>
+                    <div class="colunaLinhaGrid c3">Tipo</div>
+                    <div class="colunaLinhaGrid c4">Status</div>
+                    <div class="colunaLinhaGrid c5">Operações</div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <script src="../../estoque_geral.js" type="module"></script>
+    <script src="../js/produto.js" type="module"></script>
+</body>
+</html>
