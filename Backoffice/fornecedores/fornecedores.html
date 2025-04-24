@@ -9,7 +9,30 @@
     <link rel="stylesheet" type="text/css" href="../css/caixa_mensagem.css">
 </head>
 <body>
-    <!-- <h1>colaboradores</h1> -->
+    <!-- <h1>Fornecedores</h1> -->
+    <div id="telefonesFornecedores" class="popup ocultarPopup">
+        <div class="janelaPopup">
+            <div class="tituloPopup">
+                <div id="tituloJanelaPesq">Telefones do Fornecedor</div>
+                <img src="../../img/fechar.svg" class="btn_janelaOp" id="btn_fecharPopupTelFornecedores">
+            </div>
+            <div id="" class="corpoPopup">
+                <div id="grid_telefonesFornecedor">
+                    <div id="tituloGrid" class="tituloGrid">
+                        <div class="colunaTituloGrid c2_fornecedores">Telefone</div>
+                    </div>
+                    <div id="dadosGrid_telefonesFornecedor" class="dadosGrid">
+                        <!-- <div class="linhaGrid">
+                            <div class="colunaLinhaGrid c2">Nome</div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="rodapePopup">
+            </div>
+        </div>
+    </div>
+
     <div id="listaContatosFornecedor" class="popup ocultarPopup">
         <div class="janelaPopup">
             <div class="tituloPopup">
@@ -17,13 +40,13 @@
                 <img src="../../img/fechar.svg" class="btn_janelaOp" id="btn_fecharPopupContatos">
             </div>
             <div id="" class="corpoPopup">
-                <div id="grid_contatosFornecedor">
+                <div id="grid_contatosFornecedor" class="grid_contatosFornecedor">
                     <div id="tituloGrid" class="tituloGrid">
                         <div class="colunaTituloGrid c1_fornecedores">ID</div>
                         <div class="colunaTituloGrid c2_fornecedores">Nome</div>
                         <div class="colunaTituloGrid c3_fornecedores">Operações</div>
                     </div>
-                    <div id="dadosGrid_fornecedores" class="dadosGrid">
+                    <div id="dadosGrid_fornecedores" class="dadosGrid_fornecedores">
                         <!-- <div class="linhaGrid">
                             <div class="colunaLinhaGrid c1">ID</div>
                             <div class="colunaLinhaGrid c2">Nome</div>
@@ -117,17 +140,17 @@
                 </div>
                 <!-- <div class="campoForm"> -->
                     <div class="corpoPopup">
-                        <div id="grid_listaContatosFornecedorAdd">
+                        <div id="grid_listaContatosFornecedorAdd" class="grid_listaContatosFornecedorAdd">
                                 <div id="tituloGrid" class="tituloGrid">
-                                    <div class="colunaTituloGrid c1_fornecedoresAdd">ID</div>
-                                    <div class="colunaTituloGrid c2_fornecedoresAdd">Nome</div>
-                                    <div class="colunaTituloGrid c3_fornecedoresAdd">Operações</div>
+                                    <div class="colunaTituloGrid c1_fornecedores">ID</div>
+                                    <div class="colunaTituloGrid c2_fornecedores">Nome</div>
+                                    <div class="colunaTituloGrid c3_fornecedores">Operações</div>
                                 </div>
-                                <div id="dadosGrid_listaContatosFornecedorAdd" class="dadosGrid">
+                                <div id="dadosGrid_listaContatosFornecedorAdd" class="grid_listaContatosFornecedorAdd">
                                     <!-- <div class="linhaGrid">
-                                        <div class="colunaLinhaGrid c1">ID</div>
-                                        <div class="colunaLinhaGrid c2">Nome</div>
-                                        <div class="colunaLinhaGrid c3">Operações</div>
+                                        <div class="colunaLinhaGrid c1_fornecedores">ID</div>
+                                        <div class="colunaLinhaGrid c1_fornecedores">Nome</div>
+                                        <div class="colunaLinhaGrid c1_fornecedores">Operações</div>
                                     </div> -->
                                 </div>
                         </div>

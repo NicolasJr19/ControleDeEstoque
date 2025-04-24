@@ -17,23 +17,23 @@ body{
 }
 
 .c1_fornecedores{
-    width: 70px;
+    width: 155px;
 }
 .c2_fornecedores{
-    width: 400px;
+    width: 450px;
 }
 .c3_fornecedores{
-    width: 100px;
+    width: 153px;
 }
 
 .c1_fornecedoresAdd{
-    width: 50px;
+    width: 20%;
 }
 .c2_fornecedoresAdd{
-    width: 380px;
+    width: 50%;
 }
 .c3_fornecedoresAdd{
-    width: 130px;
+    width: 30%;
 }
 
 
@@ -45,8 +45,36 @@ body{
     
 }
 
-#grid_listaContatosFornecedorAdd{
-    width: 560px;
+.grid_listaContatosFornecedorAdd{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+}
+
+.grid_contatosFornecedor{
+    display: flex !important;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100% !important;
+}
+
+.dadosGrid_fornecedores{ 
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+}
+
+.novaLinhaContato{
+    width: 100% !important;
+}
+.novoContatoFornecedor{
+    width: 100%
+
 }
 
 #tituloGrid{

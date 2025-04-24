@@ -28,6 +28,10 @@ const btn_fecharPopupContatos = document.querySelector("#btn_fecharPopupContatos
 const dadosGrid_fornecedores = document.querySelector("#dadosGrid_fornecedores")
 const btn_criarNovoContatoFornecedor = document.querySelector("#btn_criarNovoContatoFornecedor")
 const dadosGrid_listaContatosFornecedorAdd = document.querySelector("#dadosGrid_listaContatosFornecedorAdd")
+const telefonesFornecedores = document.querySelector("#telefonesFornecedores")
+const dadosGrid_telefonesFornecedor = document.querySelector("#dadosGrid_telefonesFornecedor")
+const btn_fecharPopupTelFornecedores = document.querySelector("#btn_fecharPopupTelFornecedores")
+const novoContatoFornecedor = document.querySelector("#novoContatoFornecedor")
 
 //n=novo Fornecedor | e=editar Fornecedor
 let modojanela = "n"
@@ -273,10 +277,18 @@ btn_fecharPopup.addEventListener("click",(evt)=>{
 });
 
 btn_gravarPopup.addEventListener("click",(evt)=>{
+    const contato =[...document.querySelectorAll(".novoContatoFornecedor")]
+    let a_contatos = []
+    contato.forEach(c => {
+        console.log(c.firstChild.innerHTML)
+        a_contatos.push(c.firstChild.innerHTML)
+    })
+
     const dados ={
         n_id_fornecedor: evt.target.dataset.idfornecedor,
         s_desc_fornecedor:f_nome.value,
         c_status_fornecedor:f_status.value,
+        listaContatos:a_contatos,
         s_logo_fornecedor:img_foto.getAttribute("src")
     }
     
@@ -310,6 +322,7 @@ btn_gravarPopup.addEventListener("click",(evt)=>{
                 f_status.value=""
                 f_foto.value=""
                 img_foto.setAttribute("src","")
+                document.getElementById("dadosGrid_listaContatosFornecedorAdd")?.remove()
                 novoFornecedor.classList.add("ocultarPopup")
                 carregarFornecedores()
                 img_foto.classList.add("esconderElemento")
@@ -376,21 +389,45 @@ f_foto.addEventListener("change",(evt)=>{
 
 const addLinhaContatoFornecedor = (id,nome) =>{
     const divlinha = document.createElement("div")
-    divlinha.setAttribute("class","linhaGrid")
+    divlinha.setAttribute("class","linhaGrid novoContatoFornecedor novaLinhaContato")
+    divlinha.setAttribute("id","novoContatoFornecedor")
+
 
     const divc1 = document.createElement("div")
-    divc1.setAttribute("class", "colunaLinhaGrid c1_fornecedoresAdd")
+    divc1.setAttribute("class", "colunaLinhaGrid c1_fornecedores")
     divc1.innerHTML=id
     divlinha.appendChild(divc1)
 
     const divc2 = document.createElement("div")
-    divc2.setAttribute("class", "colunaLinhaGrid c2_fornecedoresAdd")
+    divc2.setAttribute("class", "colunaLinhaGrid c2_fornecedores")
     divc2.innerHTML=nome
     divlinha.appendChild(divc2)
 
     const divc3 = document.createElement("div")
-    divc3.setAttribute("class", "colunaLinhaGrid c3_fornecedoresAdd")
+    divc3.setAttribute("class", "colunaLinhaGrid c3_fornecedores")
     divlinha.appendChild(divc3)
+
+    const img_verFone = document.createElement("img")
+    img_verFone.setAttribute("src", "../../img/telefone.svg")
+    img_verFone.setAttribute("class", "icone_op")
+    img_verFone.addEventListener("click",(evt)=>{
+        const id = evt.target.parentNode.parentNode.firstChild.innerHTML
+        console.log(id)
+        let endpoint = `${serv}/retornatelefones/${id}`
+        fetch(endpoint)
+        .then(res=>res.json())
+        .then(res=>{
+            dadosGrid_telefonesFornecedor.innerHTML=""
+            telefonesFornecedores.classList.remove("ocultarPopup")
+            const mzi = maiorZIndex()+2
+            telefonesFornecedores.setAttribute("style",`z-index:${mzi} !important`)
+            res.forEach(e=>{
+                console.log(e.s_numero_telefone)
+                mostrarTelefonesFornecedor(e.s_numero_telefone)
+            })
+        })
+    })
+    divc3.appendChild(img_verFone)
 
     const img_removerContato = document.createElement("img")
     img_removerContato.setAttribute("src", "../../img/delete.svg")
@@ -403,13 +440,21 @@ const addLinhaContatoFornecedor = (id,nome) =>{
     dadosGrid_listaContatosFornecedorAdd.appendChild(divlinha)
 }
 
-const mostrarTelefonesFornecedor = () =>{
+const mostrarTelefonesFornecedor = (telefone) =>{
+    const divlinha = document.createElement("div")
+    divlinha.setAttribute("class","linhaGrid")
 
+    const divc2 = document.createElement("div")
+    divc2.setAttribute("class", "colunaLinhaGrid c2_fornecedoresAdd")
+    divc2.innerHTML=telefone
+    divlinha.appendChild(divc2)
+
+    dadosGrid_telefonesFornecedor.appendChild(divlinha)
 }
 
 const criarLinhaContatoFornecedor = (e)=>{
     const divlinha = document.createElement("div")
-    divlinha.setAttribute("class","linhaGrid")
+    divlinha.setAttribute("class","linhaGrid novaLinhaContato")
 
     const divc1 = document.createElement("div")
     divc1.setAttribute("class", "colunaLinhaGrid c1_fornecedores")
@@ -433,6 +478,7 @@ const criarLinhaContatoFornecedor = (e)=>{
         const id = linha.childNodes[0].innerHTML
         const nome = linha.childNodes[1].innerHTML
         addLinhaContatoFornecedor(id, nome)
+
     })
     divc3.appendChild(img_addContato)
 
@@ -443,12 +489,17 @@ const criarLinhaContatoFornecedor = (e)=>{
     img_verFone.addEventListener("click",(evt)=>{
         const id = evt.target.parentNode.parentNode.firstChild.innerHTML
         console.log(id)
-        let endpoint = `${serv}/retornatelefone/${id}`
+        let endpoint = `${serv}/retornatelefones/${id}`
         fetch(endpoint)
         .then(res=>res.json())
         .then(res=>{
+            dadosGrid_telefonesFornecedor.innerHTML=""
+            telefonesFornecedores.classList.remove("ocultarPopup")
+            const mzi = maiorZIndex()+2
+            telefonesFornecedores.setAttribute("style",`z-index:${mzi} !important`)
             res.forEach(e=>{
-                
+                console.log(e.s_numero_telefone)
+                mostrarTelefonesFornecedor(e.s_numero_telefone)
             })
         })
     })
@@ -456,6 +507,10 @@ const criarLinhaContatoFornecedor = (e)=>{
 
     dadosGrid_fornecedores.appendChild(divlinha)
 }
+
+btn_fecharPopupTelFornecedores.addEventListener("click",(evt)=>{
+    telefonesFornecedores.classList.add("ocultarPopup")
+})
 
 btnListarContatos.addEventListener("click",(evt)=>{
     listaContatosFornecedor.classList.remove("ocultarPopup")

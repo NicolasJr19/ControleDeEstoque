@@ -215,8 +215,8 @@ body{
 }
 .corpoPopup{
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     padding: 5px;
     background-color: var(--fundo-janela);
