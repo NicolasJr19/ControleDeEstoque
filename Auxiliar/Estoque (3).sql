@@ -34,7 +34,7 @@ CREATE TABLE `contatoFornecedor` (
 
 CREATE TABLE `produto` (
   `n_codigo_produto` int PRIMARY KEY,
-  `n_id_tipoProduto` int,
+  `n_tipoProduto_tipoProduto` int,
   `s_desc_produto` varchar(255),
   `n_id_fornecedor` int,
   `n_qtde_produto` int,
@@ -42,7 +42,7 @@ CREATE TABLE `produto` (
 );
 
 CREATE TABLE `tipoProduto` (
-  `n_id_tipoProduto` int PRIMARY KEY AUTO_INCREMENT,
+  `n_tipoProduto_tipoProduto` int PRIMARY KEY AUTO_INCREMENT,
   `s_desc_tipoProduto` varchar(255)
 );
 
@@ -64,7 +64,7 @@ ALTER TABLE `contatoFornecedor` ADD FOREIGN KEY (`n_id_fornecedor`) REFERENCES `
 
 ALTER TABLE `contatoFornecedor` ADD FOREIGN KEY (`n_id_pessoa`) REFERENCES `pessoa` (`n_id_pessoa`);
 
-ALTER TABLE `produto` ADD FOREIGN KEY (`n_id_tipoProduto`) REFERENCES `tipoProduto` (`n_id_tipoProduto`);
+ALTER TABLE `produto` ADD FOREIGN KEY (`n_tipoProduto_tipoProduto`) REFERENCES `tipoProduto` (`n_id_tipoProduto`);
 
 ALTER TABLE `produto` ADD FOREIGN KEY (`n_id_fornecedor`) REFERENCES `fornecedor` (`n_id_fornecedor`);
 

@@ -15,7 +15,6 @@
         <div>Produtos</div>
         <div>
             <img src="../../img/add.svg" id="btn_add" class="btn_mainOp" title="Adicionar novo produto">
-            <img src="../../img/movimentacao.svg" id="btn_movimentacao" class="btn_mainOp" title="Realizar movimentações">
             <img src="../../img/search.svg" id="btn_pesq" class="btn_mainOp" title="Pesquisar produto">
             <img src="../../img/list.svg" id="btn_listarTudo" class="btn_mainOp" title="Listar todos os produtos">
 
@@ -41,7 +40,7 @@
                     <label>Tipo da Pesquisa</label>
                     <div class="radioCaixa">
                         <div class="campoRadio">
-                            <input type="radio" id="f_pesqId" name="f_pesqTipo" checked>ID
+                            <input type="radio" id="f_pesqId" name="f_pesqTipo" checked>Código
                         </div>
                         <div class="campoRadio">
                             <input type="radio" id="f_pesqNome" name="f_pesqTipo">Nome
@@ -58,7 +57,7 @@
         </div>
     </div>
 <!--ocultarPopup-->
-    <div id="novoProdutos" class="popup">
+    <div id="novoProduto" class="popup ocultarPopup">
         <div class="janelaPopup">
             <div class="tituloPopup">
                 <div id="tituloJanela">Novo Produtos</div>
@@ -70,18 +69,18 @@
                     <input type="text" id="f_codigo" name="f_codigo">
                 </div>
                 <div class="campoForm">
-                    <label>Tipo Produtos</label>
-                    <select id="f_tipoProduto" name="f_tipo">
+                    <label>Tipo do Produto</label>
+                    <select id="f_tipoProduto" name="f_tipoProduto">
                         <option></option>
                     </select>
                 </div>
                 <div class="campoForm">
                     <label>Descrição do Produtos</label>
-                    <input type="text" id="f_nome" name="f_nome">
+                    <input type="text" id="f_descricao" name="f_descricao">
                 </div>
                 <div class="campoForm">
                     <label>Quantidade:</label>
-                    <input type="number" id="f_quantidade" name="f_quantidade">
+                    <input type="number" min="0" id="f_quantidade" name="f_quantidade">
                     </input>
                 </div>
                 <div class="campoForm">
@@ -97,14 +96,6 @@
                         <option value="I">Inativo</option> 
                     </select>
                 </div>
-                <div class="campoForm">
-                    <label>Foto do Produto</label>
-                    <input type="file" accept="image/png, image/jpeg, image/jpg" 
-                    id="f_foto" name="f_foto">
-                </div>
-                <div class="campoForm2">
-                   <img id="img_foto" class="img_foto" src="">
-                </div>
             </div>
             <div class="rodapePopup">
                 <button id="btn_gravarProduto" class="btn_comandoPopup">Registrar Produto</button>
@@ -117,30 +108,31 @@
         <div class="janelaPopup">
             <div class="tituloPopup">
                 <div id="tituloJanela">Movimentação de Estoque</div>
-                <img src="../../img/fechar.svg" class="btn_janelaOp" id="btn_fecharPopup">
+                <img src="../../img/fechar.svg" class="btn_janelaOp" id="btn_fecharPopupMov">
             </div>
             <div class="corpoPopup">
                 <div class="campoForm">
-                    <label>Nome da Produtos</label>
-                    <input type="text" id="f_nome" name="f_nome">
+                    <label>Código Produto</label>
+                    <input type="text" id="f_codigoMov" name="f_codigoMov">
                 </div>
                 <div class="campoForm">
-                    <label>Tipo Produtos</label>
-                    <select id="f_tipoProduto" name="f_tipo">
-                        <option></option>
-                    </select>
+                    <label>Descrição</label>
+                    <input type="text" id="f_descricaoMov" name="f_descricaoMov">
                 </div>
                 <div class="campoForm">
-                    <label>Status</label>
-                    <select id="f_status" name="f_status">
-                        <option value="A">Ativo</option>
-                        <option value="I">Inativo</option> 
-                    </select>
+                    <label>Quantidade</label>
+                    <input type="number" id="f_quantidadeMov" name="f_quantidadeMov"> 
+                </div>
+                <div class="campoForm">
+                    <label>Quantidade a ser movimentada</label>
+                    <input type="number" id="f_quantidadeMovimentada" name="f_quantidadeMovimentada"> 
                 </div>
             </div>
             <div class="rodapePopup">
-                <button id="btn_gravarMov" class="btn_comandoPopup">Registrar Movimentação</button>
-                <button id="btn_cancelarPopup" class="btn_comandoPopup">Cancelar</button>
+                <button id="btn_gravarMov" class="btn_comandoPopup">Gravar Movimentação</button>
+                <button id="btn_addQtd" class="btn_comandoPopup">Adicionar Quantidade</button>
+                <button id="btn_removeQtd" class="btn_comandoPopup">Remover Quantidade</button>
+                <button id="btn_cancelarMov" class="btn_comandoPopup">Cancelar</button>
             </div>
         </div>
     </div>
@@ -148,9 +140,11 @@
     <div id="areaGrid" class="areaGrid">
         <div id="grid" class="grid">
             <div id="tituloGrid" class="tituloGrid">
-                <div class="colunaTituloGrid c1">ID</div>
-                <div class="colunaTituloGrid c2">Nome</div>
+                <div class="colunaTituloGrid c1">Código</div>
                 <div class="colunaTituloGrid c3">Tipo</div>
+                <div class="colunaTituloGrid c3">Fornecedor</div>
+                <div class="colunaTituloGrid c1">Quantidade</div>
+                <div class="colunaTituloGrid c2">Descrição</div>
                 <div class="colunaTituloGrid c4">Status</div>
                 <div class="colunaTituloGrid c5">Operações</div>
             </div>

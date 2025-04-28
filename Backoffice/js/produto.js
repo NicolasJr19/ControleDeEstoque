@@ -1,20 +1,35 @@
 import { Cxmsg } from "../../utils/cxmsg.js"
+import { maiorZIndex } from "../../utils/utils.js"
 
 const dadosGrid = document.querySelector("#dadosGrid")
-const novoColaborador = document.querySelector("#novoColaborador")
+
 const btn_add = document.querySelector("#btn_add")
 const btn_pesq = document.querySelector("#btn_pesq")
 const btn_fecharPopup = document.querySelector("#btn_fecharPopup")
 const btn_fecharPopupPesq = document.querySelector("#btn_fecharPopupPesq")
 const btn_cancelarPopup = document.querySelector("#btn_cancelarPopup")
-const btn_gravarPopup = document.querySelector("#btn_gravarPopup")
-const f_tipoColab = document.querySelector("#f_tipoColab")
-const telefones = document.querySelector("#telefones")
-const f_telefone = document.querySelector("#f_telefone")
-const f_nome = document.querySelector("#f_nome")
+const btn_gravarProduto = document.querySelector("#btn_gravarProduto")
+
+const f_codigo = document.querySelector("#f_codigo")
+const f_tipoProduto = document.querySelector("#f_tipoProduto")
+const f_descricao = document.querySelector("#f_descricao")
+const f_quantidade = document.querySelector("#f_quantidade")
 const f_status = document.querySelector("#f_status")
-const f_foto = document.querySelector("#f_foto")
-const img_foto = document.querySelector("#img_foto")
+const f_fornecedor = document.querySelector("#f_fornecedor")
+
+const f_codigoMov = document.querySelector("#f_codigoMov")
+const f_descricaoMov = document.querySelector("#f_descricaoMov")
+const f_quantidadeMov = document.querySelector("#f_quantidadeMov")
+const f_quantidadeMovimentada = document.querySelector("#f_quantidadeMovimentada")
+
+const movEstoque = document.querySelector("#movEstoque")
+const novoProduto = document.querySelector("#novoProduto")
+const btn_gravarMov = document.querySelector("#btn_gravarMov")
+const btn_cancelarMov = document.querySelector("#btn_cancelarMov")
+const btn_fecharPopupMov = document.querySelector("#btn_fecharPopupMov")
+const btn_removeQtd = document.querySelector("#btn_removeQtd")
+const btn_addQtd = document.querySelector("#btn_addQtd")
+
 const f_filtragem = document.querySelector("#f_filtragem")
 const pesquisa = document.querySelector("#pesquisa")
 const btn_pesquisar = document.querySelector("#btn_pesquisar")
@@ -22,9 +37,8 @@ const f_pesq = document.querySelector("#f_pesq")
 const f_pesqId = document.querySelector("#f_pesqId")
 const f_pesqNome = document.querySelector("#f_pesqNome")
 const btn_listarTudo = document.querySelector("#btn_listarTudo")
-const cxbase = document.querySelector("#cxbase")
 
-//n=novo colaborador | e=editar colaborador
+//n=novo produto | e=editar Produto
 let modojanela = "n"
 const serv=sessionStorage.getItem("servidor_nodered")
 
@@ -35,7 +49,7 @@ f_filtragem.addEventListener("keyup",(evt)=>{
     input = evt.target
     filtragem = input.value.toUpperCase()
     for(let i=0; i < linhas.length; i++){
-        texto = linhas[i].children[1].innerHTML
+        texto = linhas[i].children[4].innerHTML
         if(texto.toUpperCase().indexOf(filtragem)>-1){
             linhas[i].classList.remove("ocultarLinhaGrid")
         }else{
@@ -72,7 +86,7 @@ btn_pesquisar.addEventListener("click",(evt)=>{
         tipo = "nome"
     }
     if(f_pesq.value!=""){
-        const endpoint_pesq = `${serv}/pesquisacolab/${tipo}/${f_pesq.value}`
+        const endpoint_pesq = `${serv}/pesquisaproduto/${tipo}/${f_pesq.value}`
         fetch(endpoint_pesq)
         .then(res=>res.json())
         .then(res=>{
@@ -101,51 +115,12 @@ btn_pesquisar.addEventListener("click",(evt)=>{
 })
 
 btn_listarTudo.addEventListener("click",(evt)=>{
-    carregarColaboradores()
+    carregarProdutos()
 })
 
-const criarCxTelefone = (fone,idtel,tipo)=>{
-    const divTel = document.createElement("div")
-            divTel.setAttribute("class", "tel")
-
-            const numTel = document.createElement("div")
-            if(tipo=="n"){
-                numTel.setAttribute("class", "numTel novoTel")
-            }else{
-                numTel.setAttribute("class", "editarTel")
-            }
-            numTel.innerHTML=fone
-            divTel.appendChild(numTel)
-            
-            const delTel=document.createElement("img")
-            delTel.setAttribute("src","../../img/delete.svg")
-            delTel.setAttribute("class","delTel")
-            delTel.setAttribute("data-idtel", idtel)
-            delTel.addEventListener("click",(evt)=>{
-                if(idtel!="-1"){
-                    const objTel = evt.target
-                    const idtel = objTel.dataset.idtel
-                    const endpoint_delTelefone=`${serv}/deltelefone/${idtel}`
-                    fetch(endpoint_delTelefone)
-                    .then(res=>{
-                        if(res.status==200){
-                            evt.target.parentNode.remove()
-                        }
-                    })
-                }else{
-                    evt.target.parentNode.remove()
-                }
-                
-            })
-            divTel.appendChild(delTel)
-
-            telefones.appendChild(divTel)
-}
-
-
-const carregarColaboradores = () =>{
-    const endpoint_todoscolaboradores = `${serv}/todaspessoas`;
-    fetch(endpoint_todoscolaboradores)
+const carregarProdutos = () =>{
+    const endpoint_todosProdutos = `${serv}/todosprodutos`;
+    fetch(endpoint_todosProdutos)
     .then(res=>res.json())
     .then(res=>{
         dadosGrid.innerHTML=""
@@ -154,7 +129,7 @@ const carregarColaboradores = () =>{
         });
     })
 }
-carregarColaboradores()
+carregarProdutos()
 
 const criarLinha = (e) =>{
     const divlinha = document.createElement("div")
@@ -163,22 +138,32 @@ const criarLinha = (e) =>{
 
             const divc1 = document.createElement("div")
             divc1.setAttribute("class", "colunaLinhaGrid c1")
-            divc1.innerHTML=e.n_id_pessoa
+            divc1.innerHTML=e.n_codigo_produto
             divlinha.appendChild(divc1)
 
-            const divc2 = document.createElement("div")
-            divc2.setAttribute("class", "colunaLinhaGrid c2")
-            divc2.innerHTML=e.s_nome_pessoa
-            divlinha.appendChild(divc2)
+            const divc6 = document.createElement("div")
+            divc6.setAttribute("class", "colunaLinhaGrid c3")
+            divc6.innerHTML=e.s_desc_tipoProduto
+            divlinha.appendChild(divc6)
 
             const divc3 = document.createElement("div")
             divc3.setAttribute("class", "colunaLinhaGrid c3")
-            divc3.innerHTML=e.n_tipoPessoa_tipoPessoa
+            divc3.innerHTML=e.s_desc_fornecedor
             divlinha.appendChild(divc3)
+
+            const divc7 = document.createElement("div")
+            divc7.setAttribute("class", "colunaLinhaGrid c1")
+            divc7.innerHTML=e.n_qtde_produto
+            divlinha.appendChild(divc7)
+
+            const divc2 = document.createElement("div")
+            divc2.setAttribute("class", "colunaLinhaGrid c2")
+            divc2.innerHTML=e.s_desc_produto
+            divlinha.appendChild(divc2)
 
             const divc4 = document.createElement("div")
             divc4.setAttribute("class", "colunaLinhaGrid c4")
-            divc4.innerHTML=e.c_status_pessoa
+            divc4.innerHTML=e.c_status_produto
             divlinha.appendChild(divc4)
 
             const divc5 = document.createElement("div")
@@ -186,32 +171,33 @@ const criarLinha = (e) =>{
             divlinha.appendChild(divc5)
 
             const img_status = document.createElement("img")
-            if(e.c_status_pessoa == "A"){
+            if(e.c_status_produto == "A"){
                 img_status.setAttribute("src", "../../img/on.svg")
             }else{
                 img_status.setAttribute("src", "../../img/off.svg")
             }
-            img_status.setAttribute("data-idcolab",e.n_id_pessoa)
+            img_status.setAttribute("data-idproduto",e.n_codigo_produto)
             img_status.setAttribute("class", "icone_op")
+            img_status.setAttribute("title","Alterar status do produto")
             img_status.addEventListener("click", (evt)=>{
-                const idcolab =evt.target.dataset.idcolab
+                const idproduto =evt.target.dataset.idproduto
                 if(evt.target.getAttribute("src")=="../../img/on.svg"){
-                    const endpoint_mudarStatus = `${serv}/mudarStatusColab/${idcolab}/I`
+                    const endpoint_mudarStatus = `${serv}/mudarStatusProduto/${idproduto}/I`
                     fetch(endpoint_mudarStatus)
                     .then(res=>{
                         if(res.status==200){
                             evt.target.setAttribute("src","../../img/off.svg")
-                            evt.target.parentNode.parentNode.childNodes[3].innerHTML="I"
+                            evt.target.parentNode.parentNode.childNodes[5].innerHTML="I"
                             
                         }
                     })
                 }else{
-                    const endpoint_mudarStatus = `${serv}/mudarStatusColab/${idcolab}/A`
+                    const endpoint_mudarStatus = `${serv}/mudarStatusProduto/${idproduto}/A`
                     fetch(endpoint_mudarStatus)
                     .then(res=>{
                         if(res.status==200){
                             evt.target.setAttribute("src","../../img/on.svg")
-                            evt.target.parentNode.parentNode.childNodes[3].innerHTML="A"
+                            evt.target.parentNode.parentNode.childNodes[5].innerHTML="A"
                         }
                     })
                 }
@@ -222,62 +208,86 @@ const criarLinha = (e) =>{
             const img_editar = document.createElement("img")
             img_editar.setAttribute("src", "../../img/edit.svg")
             img_editar.setAttribute("class", "icone_op")
+            img_editar.setAttribute("title","Editar produto")
             img_editar.addEventListener("click",(evt)=>{
                 modojanela = "e"
-                document.getElementById("tituloJanela").innerHTML = "Editar Pessoa";
+                document.getElementById("tituloJanela").innerHTML = "Editar Produto";
+                console.log(modojanela)
                 const id = evt.target.parentNode.parentNode.firstChild.innerHTML
-                let endpoint = `${serv}/dadoscolab/${id}`
+                let endpoint = `${serv}/dadosproduto/${id}`
                 fetch(endpoint)
                 .then(res=>res.json())
                 .then(res=>{
-                    btn_gravarPopup.setAttribute("data-idcolab",id)
-                    f_nome.value=res[0].s_nome_pessoa
-                    f_tipoColab.value=res[0].n_tipoPessoa_tipoPessoa
-                    f_status.value=res[0].c_status_pessoa
-                    img_foto.src=res[0].s_foto_pessoa
-                    novoColaborador.classList.remove("ocultarPopup")
-                    if(res[0].s_foto_pessoa==""){
-                        img_foto.classList.add("esconderElemento")
-                    }else{
-                        img_foto.classList.remove("esconderElemento")
-                    }
-                })
-
-                endpoint = `${serv}/telefonescolab/${id}`
-                fetch(endpoint)
-                .then(res=>res.json())
-                .then(res=>{
-                    res.forEach(t=>{
-                        criarCxTelefone(t.s_numero_telefone,t.n_id_telefone,"e")
-                    })
+                    btn_gravarProduto.setAttribute("data-idproduto",id)
+                    f_codigo.value=res[0].n_codigo_produto
+                    f_descricao.value=res[0].s_desc_produto
+                    f_tipoProduto.value=res[0].n_tipoProduto_tipoProduto
+                    f_quantidade.value=res[0].n_qtde_produto
+                    f_status.value=res[0].c_status_produto
+                    f_fornecedor.value=res[0].n_id_fornecedor
+                    novoProduto.classList.remove("ocultarPopup")
                 })
             })
             divc5.appendChild(img_editar)
 
+            const img_movimentacao = document.createElement("img")
+            img_movimentacao.setAttribute("src", "../../img/movimentacao.svg")
+            img_movimentacao.setAttribute("class", "icone_op")
+            img_movimentacao.setAttribute("title","Realizar movimentações")
+            img_movimentacao.addEventListener("click",(evt)=>{
+                const l = evt.target.parentNode.parentNode
+                if(l.childNodes[5].innerHTML == "A"){
+                    movEstoque.classList.remove("ocultarPopup")
+
+                    f_codigoMov.value=l.childNodes[0].innerHTML
+                    f_descricaoMov.value=l.childNodes[4].innerHTML
+                    f_quantidadeMov.value=l.childNodes[3].innerHTML
+
+                    f_codigoMov.setAttribute("readonly", "readonly")
+                    f_descricaoMov.setAttribute("readonly", "readonly")
+                    f_quantidadeMov.setAttribute("readonly", "readonly")
+
+                }else{
+                    const config={
+                        titulo:"Alerta",
+                        texto:"O produto está inativo e não pode ser movimentado!",
+                        cor:"#6FA0C8",
+                        tipo:"ok",
+                        ok:()=>{},
+                        sim: ()=>{},
+                        nao: ()=>{}
+                    }
+                    Cxmsg.mostrar(config)
+                }
+
+            })
+            divc5.appendChild(img_movimentacao)
+
             const img_delete = document.createElement("img")
             img_delete.setAttribute("src", "../../img/delete.svg")
             img_delete.setAttribute("class", "icone_op")
+            img_delete.setAttribute("title","Deletar produto")
             img_delete.addEventListener("click",(evt)=>{
                 const id = evt.target.parentNode.parentNode.firstChild.innerHTML
                 let config={
                     titulo:"Alerta",
-                    texto:"Deseja realmente excluir essa pessoa?",
+                    texto:"Deseja realmente excluir esse produto?",
                     cor:"#6FA0C8",
                     tipo:"sn",
                     ok:()=>{
                         console.log("ok clicado")
                     },
                     sim: ()=>{
-                        const endpoint_deletaColab = `${serv}/deletacolab/${id}`
-                        fetch(endpoint_deletaColab)
+                        const endpoint_deletaProduto = `${serv}/deletaProduto/${id}`
+                        fetch(endpoint_deletaProduto)
                         .then(res=>{
                             if(res==200){
                                 evt.target.parentNode.parentNode.remove();
                             }
-                            carregarColaboradores()
+                            carregarProdutos()
                             config={
                                 titulo:"Alerta",
-                                texto:"Pessoa excluída com sucesso!",
+                                texto:"Produto excluída com sucesso!",
                                 cor:"#6FA0C8",
                                 tipo:"ok",
                                 ok:()=>{
@@ -291,25 +301,9 @@ const criarLinha = (e) =>{
                     },
                     nao: ()=>{}
                 }
-                Cxmsg.mostrar(config)
-
-                // if(confirm("Tem certeza que deseja excluir o colaborador?")){
-                //     const endpoint_deletaColab = `${serv}/deletacolab/${id}`
-                //     fetch(endpoint_deletaColab)
-                //     .then(res=>{
-                //         if(res==200){
-                //             evt.target.parentNode.parentNode.remove();
-                //         }
-                //         carregarColaboradores()
-                //     })
-                //     alert("Colaborador excluído com sucesso!")
-                // }else{
-                //     alert("Ação cancelada!")
-                // }
-                
+                Cxmsg.mostrar(config)                
             })
 
-            // img_delete.setAttribute("id", "btn_deletaColab")
             divc5.appendChild(img_delete)
 
             dadosGrid.appendChild(divlinha)
@@ -317,64 +311,153 @@ const criarLinha = (e) =>{
 
 btn_add.addEventListener("click",(evt)=>{
     modojanela = "n"
-    document.getElementById("tituloJanela").innerHTML = "Nova Pessoa";
+    document.getElementById("tituloJanela").innerHTML = "Novo Produto";
 
-    novoColaborador.classList.remove("ocultarPopup")
+    novoProduto.classList.remove("ocultarPopup")
 
-    f_nome.value=""
-    f_tipoColab.value=""
-    f_status.value=""
-    f_foto.value=""
-    img_foto.setAttribute("src","")
-    img_foto.classList.add("esconderElemento")
-    telefones.innerHTML=""
+    f_codigo.value=""
+    f_tipoProduto.value=""
+    f_status.value="A"
+    f_descricao.value=""
+    f_quantidade.value=""
+    f_fornecedor.value=""
+
+
 });
+
+btn_gravarMov.addEventListener("click",(evt)=>{
+    const dados={
+        n_codigo_produto: Number(f_codigoMov.value),
+        n_qtde_produto:Number(f_quantidadeMov.value)
+    }
+
+    const cab={
+        method: 'post',
+        body:JSON.stringify(dados)
+    }
+    
+    const endpoint_gravarMov = `${serv}/editarmovimentacao`
+    fetch(endpoint_gravarMov, cab)
+    .then(res=>{
+        carregarProdutos()
+        let config={
+            titulo:"Alerta",
+            texto:"Movimentação gravada!",
+            cor:"#6FA0C8",
+            tipo:"ok",
+            ok:()=>{},
+            sim:()=>{},
+            nao:()=>{}
+        }
+        Cxmsg.mostrar(config)
+        movEstoque.classList.add("ocultarPopup")
+    })
+})
+
+btn_addQtd.addEventListener("click",(evt)=>{
+    let quantidadeAtual = parseInt(f_quantidadeMov.value)
+    let adicionar = parseInt(f_quantidadeMovimentada.value)
+
+    quantidadeAtual+=adicionar
+
+    f_quantidadeMov.value=quantidadeAtual
+    f_quantidadeMovimentada.value="0"
+})
+
+btn_removeQtd.addEventListener("click",(evt)=>{
+    let quantidadeAtual = parseInt(f_quantidadeMov.value)
+    let remover = parseInt(f_quantidadeMovimentada.value)
+
+    if(remover<=quantidadeAtual){
+        quantidadeAtual-=remover
+    }else{
+        let config={
+            titulo:"Alerta",
+            texto:"A quantidade desejada não é suficiente!",
+            cor:"#6FA0C8",
+            tipo:"ok",
+            ok:()=>{},
+            sim:()=>{},
+            nao:()=>{}
+        }
+        Cxmsg.mostrar(config)
+    }
+
+    f_quantidadeMov.value=quantidadeAtual
+    f_quantidadeMovimentada.value="0"
+})
+
+btn_fecharPopupMov.addEventListener("click",(evt)=>{
+    movEstoque.classList.add("ocultarPopup")
+});
+
+btn_cancelarMov.addEventListener("click",(evt)=>{
+    movEstoque.classList.add("ocultarPopup")
+
+})
 
 btn_fecharPopup.addEventListener("click",(evt)=>{
-    f_nome.value=""
-    f_nome.value=""
-    f_tipoColab.value=""
+    f_codigo.value=""
+    f_tipoProduto.value=""
     f_status.value=""
-    f_foto.value=""
-    img_foto.setAttribute("src","")
-    telefones.innerHTML=""
-    novoColaborador.classList.add("ocultarPopup")
+    f_descricao.value=""
+    f_quantidade.value=""
+    f_fornecedor.value=""
+    novoProduto.classList.add("ocultarPopup")
 });
 
-btn_gravarPopup.addEventListener("click",(evt)=>{
-    const tels=[...document.querySelectorAll(".novoTel")]
-    let numTels=[]
-    tels.forEach(t=>{
-        numTels.push(t.innerHTML)
-    })
+btn_gravarProduto.addEventListener("click",(evt)=>{
     const dados ={
-        n_id_pessoa: evt.target.dataset.idcolab,
-        s_nome_pessoa:f_nome.value,
-        n_tipoPessoa_tipoPessoa:f_tipoColab.value,
-        c_status_pessoa:f_status.value,
-        numtelefones:numTels,
-        s_foto_pessoa:img_foto.getAttribute("src")
+        n_codigo_produto: Number(f_codigo.value),
+        n_tipoProduto_tipoProduto:Number(f_tipoProduto.value),
+        s_desc_produto:f_descricao.value,
+        n_qtde_produto:Number(f_quantidade.value),
+        n_id_fornecedor:Number(f_fornecedor.value),
+        c_status_produto:f_status.value
     }
+
+    // Validação antes de enviar
+    if (
+        !f_codigo.value.trim() ||
+        !f_tipoProduto.value ||
+        !f_descricao.value.trim() ||
+        !f_quantidade.value ||
+        !f_fornecedor.value ||
+        !f_status.value
+    ) {
+        let config = {
+            titulo: "Alerta",
+            texto: "Preencha todos os campos",
+            cor: "#F08080",
+            tipo: "ok",
+            ok: () => {},
+            sim: () => {},
+            nao: () => {}
+        };
+        Cxmsg.mostrar(config);
+        return; // Impede de continuar
+    }
+
     
     const cab = {
         method:'post',
         body: JSON.stringify(dados)
     }
 
-    let endpoint_novoEditarColab = null
+    let endpoint_novoEditarProduto = null
     if(modojanela=="n"){
-        endpoint_novoEditarColab = `${serv}/novocolab`
+        endpoint_novoEditarProduto = `${serv}/novoproduto`
     }else{
-        endpoint_novoEditarColab = `${serv}/editarcolab`
+        endpoint_novoEditarProduto = `${serv}/editarproduto`
     }
 
-    fetch(endpoint_novoEditarColab,cab)
+    fetch(endpoint_novoEditarProduto,cab)
     .then(res=>{
         if(res.status==200){
             if(modojanela=="n"){
                 let config={
                     titulo:"Alerta",
-                    texto:"Nova pessoa gravada com sucesso!",
+                    texto:"Novo produto gravado com sucesso!",
                     cor:"#6FA0C8",
                     tipo:"ok",
                     ok:()=>{},
@@ -382,19 +465,19 @@ btn_gravarPopup.addEventListener("click",(evt)=>{
                     nao:()=>{}
             } 
             Cxmsg.mostrar(config)
-                f_nome.value=""
-                f_tipoColab.value=""
+                f_codigo.value=""
+                f_tipoProduto.value=""
                 f_status.value=""
-                f_foto.value=""
-                img_foto.setAttribute("src","")
-                telefones.innerHTML=""
-                carregarColaboradores()
-                img_foto.classList.add("esconderElemento")
-                novoColaborador.classList.add("ocultarPopup")
+                f_descricao.value=""
+                f_quantidade.value=""
+                f_fornecedor.value=""
+                novoProduto.classList.add("ocultarPopup")
+          
+                carregarProdutos()
             }else{
                 let config={
                     titulo:"Alerta",
-                    texto:"Pessoa editado com sucesso!",
+                    texto:"Produto editado com sucesso!",
                     cor:"#6FA0C8",
                     tipo:"ok",
                     ok:()=>{},
@@ -402,11 +485,12 @@ btn_gravarPopup.addEventListener("click",(evt)=>{
                     nao:()=>{}
             } 
             Cxmsg.mostrar(config)
+            carregarProdutos()
             }
         }else{
             let config={
                 titulo:"Alerta",
-                texto:"Erro ao gravar nova pessoa!",
+                texto:"Erro ao gravar novo produto!",
                 cor:"#6FA0C8",
                 tipo:"ok",
                 ok:()=>{},
@@ -414,103 +498,61 @@ btn_gravarPopup.addEventListener("click",(evt)=>{
                 nao:()=>{}
         } 
         Cxmsg.mostrar(config)
-            console.error("Erro ao gravar novo pessoa")
+            console.error("Erro ao gravar novo produto")
         }
     })
 })
 
 btn_cancelarPopup.addEventListener("click",(evt)=>{
     if(modojanela=="n"){
-        f_nome.value=""
-        f_nome.value=""
-        f_tipoColab.value=""
+        f_codigo.value=""
+        f_tipoProduto.value=""
         f_status.value=""
-        f_foto.value=""
-        img_foto.setAttribute("src","")
-        telefones.innerHTML=""
+        f_descricao.value=""
+        f_quantidade.value=""
+        f_fornecedor.value=""
+        novoProduto.classList.add("ocultarPopup")
     }else{
-        novoColaborador.classList.add("ocultarPopup")
+        novoProduto.classList.add("ocultarPopup")
     }
 });
 
-const endpoint_tiposColab  = `${serv}/tiposcolab`
-fetch(endpoint_tiposColab)
+const endpoint_tiposProdutos  = `${serv}/tipoproduto`
+fetch(endpoint_tiposProdutos)
 .then(res=>res.json())
 .then(res=>{
-    f_tipoColab.innerHTML=""
+    f_tipoProduto.innerHTML=""
 
     res.forEach(e=>{
-        const opt=document.createElement("option")
-        opt.setAttribute("value",e.n_tipoPessoa_tipoPessoa)
-        opt.innerHTML=e.s_desc_tipoPessoa
-        f_tipoColab.appendChild(opt)
+        const opt = document.createElement("option")
+        opt.setAttribute("value",e.n_tipoProduto_tipoProduto)
+        opt.innerHTML=e.s_desc_tipoProduto
+        f_tipoProduto.appendChild(opt)
     })
 })
 
-f_telefone.addEventListener("keyup",(evt)=>{
-    if(evt.key=="Enter"){
-        if(evt.target.value.length >= 14 && evt.target.value.length<=15){
-            criarCxTelefone(evt.target.value, "-1","n")
-            evt.target.value=""
-        }else{
-            let config={
-                titulo:"Alerta",
-                texto:"Insira um número de telefone válido!",
-                cor:"#6FA0C8",
-                tipo:"ok",
-                ok:()=>{},
-                sim:()=>{},
-                nao:()=>{}
-        } 
-        Cxmsg.mostrar(config)
-        }
-    }
-    
-})
+const endpoint_fornecedorProduto  = `${serv}/fornecedorproduto`
+fetch(endpoint_fornecedorProduto)
+.then(res=>res.json())
+.then(res=>{
+    f_fornecedor.innerHTML=""
 
-const converte_imagem_b64 = (localDestino,arquivoimg) => {
-    const obj = arquivoimg
-    const reader = new FileReader()
-    reader.addEventListener("load",(evt)=>{
-        // const res = reader.result
-        localDestino.src=reader.result
+    res.forEach(e=>{
+        const opt = document.createElement("option")
+        opt.setAttribute("value",e.n_id_fornecedor)
+        opt.innerHTML=e.s_desc_fornecedor
+        f_fornecedor.appendChild(opt)
     })
-    if(obj){
-        reader.readAsDataURL(obj)
-    }
-}
-
-f_foto.addEventListener("change",(evt)=>{
-    converte_imagem_b64(img_foto,evt.target.files[0])
-    img_foto.classList.remove("esconderElemento")
 })
 
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    const telefoneInput = document.querySelector("#f_telefone");
-
-     // Impede que caracteres não numéricos sejam digitados
-     telefoneInput.addEventListener("keypress", function (event) {
-        if (!/[0-9]/.test(event.key) && !(event.key=="Enter")) {
-            event.preventDefault();
-        }
-    });
-
-    telefoneInput.addEventListener("input", function () {
-        let valor = telefoneInput.value.replace(/\D/g, ""); // Remove caracteres não numéricos
-        if (valor.length > 11) valor = valor.slice(0, 11); // Limita a 11 caracteres
-
-        // Aplica a máscara
-        if (valor.length > 10) {
-            telefoneInput.value = `(${valor.slice(0, 2)}) ${valor.slice(2, 7)}-${valor.slice(7, 11)}`;
-        } else if (valor.length > 6) {
-            telefoneInput.value = `(${valor.slice(0, 2)}) ${valor.slice(2, 6)}-${valor.slice(6, 10)}`;
-        } else if (valor.length > 2) {
-            telefoneInput.value = `(${valor.slice(0, 2)}) ${valor.slice(2, 6)}`;
-        } else if (valor.length > 0) {
-            telefoneInput.value = `(${valor}`;
-        }
-    });
-});
-
+// const converte_imagem_b64 = (localDestino,arquivoimg) => {
+//     const obj = arquivoimg
+//     const reader = new FileReader()
+//     reader.addEventListener("load",(evt)=>{
+//         // const res = reader.result
+//         localDestino.src=reader.result
+//     })
+//     if(obj){
+//         reader.readAsDataURL(obj)
+//     }
+// }
