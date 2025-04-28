@@ -8,13 +8,16 @@ const btn_fecharPopup = document.querySelector("#btn_fecharPopup")
 const btn_fecharPopupPesq = document.querySelector("#btn_fecharPopupPesq")
 const btn_cancelarPopup = document.querySelector("#btn_cancelarPopup")
 const btn_gravarPopup = document.querySelector("#btn_gravarPopup")
+
 const f_tipoColab = document.querySelector("#f_tipoColab")
 const telefones = document.querySelector("#telefones")
 const f_telefone = document.querySelector("#f_telefone")
 const f_nome = document.querySelector("#f_nome")
+const f_email = document.querySelector("#f_email")
 const f_status = document.querySelector("#f_status")
 const f_foto = document.querySelector("#f_foto")
 const img_foto = document.querySelector("#img_foto")
+
 const f_filtragem = document.querySelector("#f_filtragem")
 const pesquisa = document.querySelector("#pesquisa")
 const btn_pesquisar = document.querySelector("#btn_pesquisar")
@@ -350,6 +353,9 @@ btn_gravarPopup.addEventListener("click",(evt)=>{
     const dados ={
         n_id_pessoa: evt.target.dataset.idcolab,
         s_nome_pessoa:f_nome.value,
+        s_email_pessoa:f_email.value,
+        s_password_pessoa:"",
+        n_firstacess_pessoa:1,
         n_tipoPessoa_tipoPessoa:f_tipoColab.value,
         c_status_pessoa:f_status.value,
         numtelefones:numTels,
@@ -383,6 +389,7 @@ btn_gravarPopup.addEventListener("click",(evt)=>{
             } 
             Cxmsg.mostrar(config)
                 f_nome.value=""
+                f_email.value=""
                 f_tipoColab.value=""
                 f_status.value=""
                 f_foto.value=""
@@ -402,6 +409,7 @@ btn_gravarPopup.addEventListener("click",(evt)=>{
                     nao:()=>{}
             } 
             Cxmsg.mostrar(config)
+            carregarColaboradores()
             }
         }else{
             let config={
