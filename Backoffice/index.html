@@ -9,19 +9,60 @@
     <link rel="stylesheet" type="text/css" href="css/caixa_mensagem.css">
 </head>
 <body>
-    <div id="login">
-        <h1>Login</h1>
-        <label>Usuário:</label>
-        <input type="text" id="f_email" name="f_email">
-        <label>Senha:</label>
-        <input type="password" id="f_password" name="f_password">
-        <button id="btn_login">Login</button>
+    <div id="primeiroacesso" class="popup ocultarPopup">
+        <div class="janelaPopupPrimeiro">
+            <input type="hidden" id="iddefsenha" value="-1">
+            <div class="tituloPopup">
+                <div id="tituloJanela">Primeiro Acesso</div>
+                <img src="../../img/fechar.svg" class="btn_janelaOp" id="btn_fecharPopup">
+            </div>
+            <div class="corpoPopup">
+                <div class="campoForm">
+                    <label>Usuário:</label>
+                    <input type="email" id="f_email1" name="f_email1" readonly>    
+                </div>
+                <div class="campoForm">
+                    <label>Digite sua senha:</label>
+                    <input type="password" id="f_password1" name="f_password1">
+                </div>
+                <div class="campoForm">
+                    <label>Confirme sua senha:</label>
+                    <input type="password" id="f_password2" name="f_password2">
+                </div>
+            </div>
+            <div class="rodapePopup">
+                <button id="btn_gravarSenha" class="btn_comandoPopup">Gravar</button>
+                <button id="btn_cancelar" class="btn_comandoPopup">Cancelar</button>
+            </div>
+        </div>
+    </div>
 
+
+    <div id="login" class="popup">
+        <div class="janelaPopupLogin">
+            <div class="tituloPopup">
+                <div id="tituloJanela">Login</div>
+            </div>
+            <div class="corpoPopup">
+                <div class="campoForm">
+                    <label>Usuário:</label>
+                    <input type="email" id="f_email" name="f_email">
+                </div>
+                <div class="campoForm">
+                    <label>Senha:</label>
+                    <input type="password" id="f_password" name="f_password">
+                </div>
+            </div>
+            <div class="rodapePopup rodapePopupLogin">
+                <button id="btn_login" class="btn_comandoPopup">Login</button>
+            </div>
+        </div>
     </div>
 
     
 
     <script src="../estoque_geral.js" type="module"></script>
     <script src="js/index.js" type="module"></script>
+    <script src="../utils/cxmsg.js" type="module"></script>
 </body>
 </html>

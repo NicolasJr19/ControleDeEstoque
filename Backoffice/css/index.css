@@ -1,0 +1,30 @@
+.janelaPopupLogin{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    width: 25%;
+}
+
+.janelaPopupPrimeiro{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+
+    width: 20%;
+}
+
+.rodapePopupLogin{
+    display: flex;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.popupLogin{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
