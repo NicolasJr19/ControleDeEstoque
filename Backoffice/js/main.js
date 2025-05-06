@@ -13,6 +13,7 @@ const verificarToken = () => {
             pagina()
         }else{
             alert("Token inválido!")
+            window.location.href="./index.html"
             console.log("Deu ruim")
         }
     })
